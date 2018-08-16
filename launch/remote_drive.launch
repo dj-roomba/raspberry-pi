@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find ca_driver)/launch/create_2.launch" />
+
+    <node pkg="dj_roomba" name="drive" type="drive.py" output="screen"/>
+    <node pkg="dj_roomba" name="remote_drive" type="remote_drive.py" output="screen" />
+</launch>

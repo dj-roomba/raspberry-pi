@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find ca_driver)/launch/create_2.launch" />
+
+    <node pkg="dj_roomba" name="position_controller" type="position_controller.py" output="screen" />
+</launch>
