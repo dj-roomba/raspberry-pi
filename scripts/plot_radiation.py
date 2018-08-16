@@ -31,7 +31,6 @@ if __name__ == "__main__":
         PointField(name="x", offset=0, datatype=PointField.FLOAT32, count=1),
         PointField(name="y", offset=4, datatype=PointField.FLOAT32, count=1),
         PointField(name="z", offset=8, datatype=PointField.FLOAT32, count=1),
-        PointField(name="cnt", offset=12, datatype=PointField.FLOAT32, count=1)
         ]
 
     points = []
@@ -44,7 +43,7 @@ if __name__ == "__main__":
         count = ser.readline()
         
         try:
-            count = float(count)
+            count = int(count)
         except ValueError:
             continue
 
@@ -61,8 +60,12 @@ if __name__ == "__main__":
         y = trans[1]
         z = 0
 
-        # avoid graphing 0 counts because they just get in the way
-        if (count > 0):
-            points.append([x, y, z, count])
+        # graph each event as a point. they are displayed transparently so
+        # mulitple should stack on top of one another
+        for i in range(count):
+            points.append([x, y, z])
+
+        # republish the pt cloud if there is new data
+        if count > 0:
             pointcloud = pc2.create_cloud(header, fields, points)
             pub.publish(pointcloud)
